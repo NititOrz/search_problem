@@ -73,7 +73,7 @@ def tinyMazeSearch(problem):
     return  [s, s, w, s, w, w, s, w]
 
 def depthFirstSearch(problem):
-    from game import Directions,Configuration
+    from game import Directions
     from util import Stack
     South = Directions.SOUTH
     West = Directions.WEST
@@ -96,30 +96,30 @@ def depthFirstSearch(problem):
     """
     "*** YOUR CODE HERE ***"
     ans = []
-    Map = {}
-    Dir = {}
-    q = Stack()
-    S = problem.getStartState()
-    visited = []
-    q.push(S)
-    if problem.isGoalState(S):
+    ParentNode = {}
+    direction = {}
+    stack = Stack()
+    startNode = problem.getStartState()
+    visitedList = []
+    stack.push(startNode)
+    if problem.isGoalState(startNode):
         return stop
 
-    while q.isEmpty() == False:
-        u = q.pop()
-        visited.append(u)
-        if problem.isGoalState(u):
-            cur = u
-            while cur != S:
-                ans.append(Dir[cur])
-                cur = Map[cur]
+    while stack.isEmpty() == False:
+        currentNode = stack.pop()
+        visitedList.append(currentNode)
+        if problem.isGoalState(currentNode):
+            goalPath = currentNode
+            while goalPath != startNode:
+                ans.append(direction[goalPath])
+                goalPath = ParentNode[goalPath]
             return ans[::-1]
-        suc = problem.getSuccessors(u)
-        for x in suc:
-            if not x[0] in visited:
-                q.push(x[0])
-                Map[x[0]] = u
-                Dir[x[0]] = x[1]
+        allCurrentSuccessor = problem.getSuccessors(currentNode)
+        for Node in allCurrentSuccessor:
+            if not Node[0] in visitedList:
+                stack.push(Node[0])
+                ParentNode[Node[0]] = currentNode
+                direction[Node[0]] = Node[1]
 
     print "can't find goal"
     return stop
@@ -128,6 +128,15 @@ def depthFirstSearch(problem):
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
+    from game import Directions
+    from util import Queue
+    South = Directions.SOUTH
+    West = Directions.WEST
+    East = Directions.EAST
+    North = Directions.NORTH
+    stop = Directions.STOP
+
+
     util.raiseNotDefined()
 
 def uniformCostSearch(problem):
