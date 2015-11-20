@@ -136,12 +136,74 @@ def breadthFirstSearch(problem):
     North = Directions.NORTH
     stop = Directions.STOP
 
+    ans = []
+    ParentNode = {}
+    direction = {}
+    queue = Queue()
+    startNode = problem.getStartState()
+    visitedList = []
+    queue.push(startNode)
+    if problem.isGoalState(startNode):
+        return stop
+
+    while queue.isEmpty() == False:
+        currentNode = queue.pop()
+        if not currentNode in visitedList:
+            visitedList.append(currentNode)
+        if problem.isGoalState(currentNode):
+            goalPath = currentNode
+            while goalPath != startNode:
+                ans.append(direction[goalPath])
+                goalPath = ParentNode[goalPath]
+            return ans[::-1]
+        allCurrentSuccessor = problem.getSuccessors(currentNode)
+        for Node in allCurrentSuccessor:
+            if not Node[0] in visitedList:
+                queue.push(Node[0])
+                visitedList.append(Node[0])
+                ParentNode[Node[0]] = currentNode
+                direction[Node[0]] = Node[1]
+                print Node[0],visitedList
+
+    print "can't find goal"
+    return stop
 
     util.raiseNotDefined()
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
+    print "test"
+    from game import Directions
+    # from util import PriorityQueue
+    # South = Directions.SOUTH
+    # West = Directions.WEST
+    # East = Directions.EAST
+    # North = Directions.NORTH
+    stop = Directions.STOP
+
+    # startNode = problem.getStartState()
+    # pQueue = PriorityQueue()
+    # pQueue.push(startNode, 0)
+    # ParentNodeOf = {}
+    # cumCost = {}
+    # ParentNodeOf[startNode] = None
+    # cumCost[startNode] = 0
+
+    # while not pQueue.isEmpty():
+    #     currentNode = pQueue.pop()
+    #     print currentNode
+
+        # if problem.isGoalState(currentNode):
+        # return stop
+
+        # allCurrentSuccessor = problem.getSuccessors(currentNode)
+        # for Node in allCurrentSuccessor:
+        #     newCost = 
+
+
+    return stop
+
     util.raiseNotDefined()
 
 def nullHeuristic(state, problem=None):
