@@ -163,7 +163,6 @@ def breadthFirstSearch(problem):
                 visitedList.append(Node[0])
                 ParentNode[Node[0]] = currentNode
                 direction[Node[0]] = Node[1]
-                print Node[0],visitedList
 
     print "can't find goal"
     return stop
@@ -172,37 +171,36 @@ def breadthFirstSearch(problem):
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
-    print "test"
     from game import Directions
-    # from util import PriorityQueue
-    # South = Directions.SOUTH
-    # West = Directions.WEST
-    # East = Directions.EAST
-    # North = Directions.NORTH
+    from util import PriorityQueue
+    South = Directions.SOUTH
+    West = Directions.WEST
+    East = Directions.EAST
+    North = Directions.NORTH
     stop = Directions.STOP
 
-    # startNode = problem.getStartState()
-    # pQueue = PriorityQueue()
-    # pQueue.push(startNode, 0)
-    # ParentNodeOf = {}
-    # cumCost = {}
-    # ParentNodeOf[startNode] = None
-    # cumCost[startNode] = 0
+    startNode = problem.getStartState()
+    direction = []
+    oldCost = {}
+    oldCost[startNode] = None
+    pQueue = PriorityQueue()
+    pQueue.push((startNode,direction), 0)
+    visitedList = []
 
-    # while not pQueue.isEmpty():
-    #     currentNode = pQueue.pop()
-    #     print currentNode
+    while not pQueue.isEmpty():
+        currentNode, direction = pQueue.pop()
+        visitedList.append(currentNode)
+        if problem.isGoalState(currentNode):
+            return direction
 
-        # if problem.isGoalState(currentNode):
-        # return stop
-
-        # allCurrentSuccessor = problem.getSuccessors(currentNode)
-        # for Node in allCurrentSuccessor:
-        #     newCost = 
-
-
-    return stop
+        for coord, action, steps in problem.getSuccessors(currentNode):
+            new_direction = direction+[action]
+            priority = problem.getCostOfActions(new_direction)
+            if not coord in visitedList or priority < oldCost[coord]:
+                oldCost[coord] = priority
+                pQueue.push((coord,new_direction), priority)
+                visitedList.append(coord)
+    return []
 
     util.raiseNotDefined()
 
@@ -215,7 +213,39 @@ def nullHeuristic(state, problem=None):
 
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
+    
+    from game import Directions
+    from util import PriorityQueue
+    South = Directions.SOUTH
+    West = Directions.WEST
+    East = Directions.EAST
+    North = Directions.NORTH
+    stop = Directions.STOP
+
+    startNode = problem.getStartState()
+    direction = []
+    oldCost = {}
+    oldCost[startNode] = None
+    pQueue = PriorityQueue()
+    pQueue.push((startNode,direction), 0)
+    visitedList = []
+
+    while not pQueue.isEmpty():
+        currentNode, direction = pQueue.pop()
+        visitedList.append(currentNode)
+        if problem.isGoalState(currentNode):
+            return direction
+
+        for coord, action, steps in problem.getSuccessors(currentNode):
+            new_direction = direction+[action]
+            priority = problem.getCostOfActions(new_direction) + heuristic(coord, problem)
+            if not coord in visitedList or priority < oldCost[coord]:
+                oldCost[coord] = priority
+                pQueue.push((coord,new_direction), priority)
+                visitedList.append(coord)
+    return []
+
+
     util.raiseNotDefined()
 
 
