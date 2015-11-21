@@ -238,7 +238,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
 
         for coord, action, steps in problem.getSuccessors(currentNode):
             new_direction = direction+[action]
-            priority = problem.getCostOfActions(new_direction) + heuristic(coord, problem)
+            priority = problem.getCostOfActions(new_direction) + heuristic(coord, problem) # add this form uniformCostSearch
             if not coord in visitedList or priority < oldCost[coord]:
                 oldCost[coord] = priority
                 pQueue.push((coord,new_direction), priority)
