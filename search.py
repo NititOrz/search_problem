@@ -121,7 +121,6 @@ def depthFirstSearch(problem):
                 ParentNode[Node[0]] = currentNode
                 direction[Node[0]] = Node[1]
 
-    print "can't find goal"
     return stop
     util.raiseNotDefined()
 
@@ -130,42 +129,23 @@ def breadthFirstSearch(problem):
     "*** YOUR CODE HERE ***"
     from game import Directions
     from util import Queue
-    South = Directions.SOUTH
-    West = Directions.WEST
-    East = Directions.EAST
-    North = Directions.NORTH
-    stop = Directions.STOP
 
-    ans = []
-    ParentNode = {}
-    direction = {}
     queue = Queue()
     startNode = problem.getStartState()
+    queue.push((startNode, []))
     visitedList = []
-    queue.push(startNode)
-    if problem.isGoalState(startNode):
-        return stop
 
-    while queue.isEmpty() == False:
-        currentNode = queue.pop()
-        if not currentNode in visitedList:
-            visitedList.append(currentNode)
-        if problem.isGoalState(currentNode):
-            goalPath = currentNode
-            while goalPath != startNode:
-                ans.append(direction[goalPath])
-                goalPath = ParentNode[goalPath]
-            return ans[::-1]
-        allCurrentSuccessor = problem.getSuccessors(currentNode)
-        for Node in allCurrentSuccessor:
-            if not Node[0] in visitedList:
-                queue.push(Node[0])
-                visitedList.append(Node[0])
-                ParentNode[Node[0]] = currentNode
-                direction[Node[0]] = Node[1]
-
-    print "can't find goal"
-    return stop
+    while not queue.isEmpty():
+        current, actions = queue.pop()
+        if problem.isGoalState(current):
+            return actions
+        if not current in visitedList:
+            visitedList.append(current)
+        for coord, direction, steps in problem.getSuccessors(current):
+            if not coord in visitedList:
+                visitedList.append(coord)
+                queue.push((coord, actions+[direction]))
+    return []
 
     util.raiseNotDefined()
 
@@ -173,34 +153,29 @@ def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     from game import Directions
     from util import PriorityQueue
-    South = Directions.SOUTH
-    West = Directions.WEST
-    East = Directions.EAST
-    North = Directions.NORTH
-    stop = Directions.STOP
 
+    pqueue = PriorityQueue()
     startNode = problem.getStartState()
-    direction = []
+    pqueue.push((startNode, []),0)
+    visitedList = []
     oldCost = {}
     oldCost[startNode] = None
-    pQueue = PriorityQueue()
-    pQueue.push((startNode,direction), 0)
-    visitedList = []
 
-    while not pQueue.isEmpty():
-        currentNode, direction = pQueue.pop()
-        visitedList.append(currentNode)
-        if problem.isGoalState(currentNode):
-            return direction
-
-        for coord, action, steps in problem.getSuccessors(currentNode):
-            new_direction = direction+[action]
-            priority = problem.getCostOfActions(new_direction)
+    while not pqueue.isEmpty():
+        current, actions = pqueue.pop()
+        if problem.isGoalState(current):
+            return actions
+        visitedList.append(current)
+        for coord, direction, steps in problem.getSuccessors(current):
+            new_actions = actions + [direction]
+            priority = problem.getCostOfActions(new_actions)
             if not coord in visitedList or priority < oldCost[coord]:
                 oldCost[coord] = priority
-                pQueue.push((coord,new_direction), priority)
                 visitedList.append(coord)
+                pqueue.push((coord, new_actions), priority)
     return []
+
+
 
     util.raiseNotDefined()
 
@@ -216,33 +191,26 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     
     from game import Directions
     from util import PriorityQueue
-    South = Directions.SOUTH
-    West = Directions.WEST
-    East = Directions.EAST
-    North = Directions.NORTH
-    stop = Directions.STOP
 
+    pqueue = PriorityQueue()
     startNode = problem.getStartState()
-    direction = []
+    pqueue.push((startNode, []),0)
+    visitedList = []
     oldCost = {}
     oldCost[startNode] = None
-    pQueue = PriorityQueue()
-    pQueue.push((startNode,direction), 0)
-    visitedList = []
 
-    while not pQueue.isEmpty():
-        currentNode, direction = pQueue.pop()
-        visitedList.append(currentNode)
-        if problem.isGoalState(currentNode):
-            return direction
-
-        for coord, action, steps in problem.getSuccessors(currentNode):
-            new_direction = direction+[action]
-            priority = problem.getCostOfActions(new_direction) + heuristic(coord, problem) # add this form uniformCostSearch
+    while not pqueue.isEmpty():
+        current, actions = pqueue.pop()
+        if problem.isGoalState(current):
+            return actions
+        visitedList.append(current)
+        for coord, direction, steps in problem.getSuccessors(current):
+            new_actions = actions + [direction]
+            priority = problem.getCostOfActions(new_actions) + heuristic(coord, problem)
             if not coord in visitedList or priority < oldCost[coord]:
                 oldCost[coord] = priority
-                pQueue.push((coord,new_direction), priority)
                 visitedList.append(coord)
+                pqueue.push((coord, new_actions), priority)
     return []
 
 
