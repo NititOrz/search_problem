@@ -33,7 +33,7 @@ python pacman.py -l mediumDottedMaze -p StayEastSearchAgent ----- This map make 
 
 python pacman.py -l mediumScaryMaze -p StayWestSearchAgent ----- This map make the right zone more cost than left zone by put enemies there
 
-_____________________________________________________
+________________________________________________________
 
 ** A star Search Finding Paths **
 
@@ -41,5 +41,19 @@ python pacman.py -l bigMaze -z .5 -p SearchAgent -a fn=astar,heuristic=manhattan
 
 ________________________________________________________
 
+** Solved food on four corner problem **
+
+python pacman.py -l tinyCorners -p SearchAgent -a fn=bfs,prob=CornersProblem
+
+python pacman.py -l mediumCorners -p SearchAgent -a fn=bfs,prob=CornersProblem
+
+This's like above command but change problem to solve
+
+_______________________________________________________
+
 The Pacman board will show an overlay of the states explored, 
 and the order in which they were explored (brighter red means earlier exploration).
+
+
+You can find code of search algorithm in search.py
+and conner problem solver "searchAgent" in searchAgents.py 
