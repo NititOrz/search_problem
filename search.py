@@ -197,7 +197,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     pqueue.push((startNode, []),0)
     visitedList = []
     oldCost = {}
-    oldCost[startNode] = None
+    oldCost[startNode[0]] = None
 
     while not pqueue.isEmpty():
         current, actions = pqueue.pop()
@@ -207,8 +207,8 @@ def aStarSearch(problem, heuristic=nullHeuristic):
         for coord, direction, steps in problem.getSuccessors(current):
             new_actions = actions + [direction]
             priority = problem.getCostOfActions(new_actions) + heuristic(coord, problem)
-            if not coord in visitedList or priority < oldCost[coord]:
-                oldCost[coord] = priority
+            if not coord in visitedList or priority < oldCost[coord[0]]:
+                oldCost[coord[0]] = priority
                 visitedList.append(coord)
                 pqueue.push((coord, new_actions), priority)
     return []
