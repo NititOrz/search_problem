@@ -57,6 +57,12 @@ python pacman.py -l testSearch -p AStarFoodSearchAgent
 
 Note: AStarFoodSearchAgent is a shortcut for -p SearchAgent -a fn=astar,prob=FoodSearchProblem,heuristic=foodHeuristic.
 
+
+python pacman.py -l trickySearch -p AStarFoodSearchAgent ----- This is for trickyMap
+
+Note: This search may take time to find about 40 seconds(my computer) because it explores to many node
+
+
 __________________________________________________________
 
 
