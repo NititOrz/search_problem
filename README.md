@@ -51,6 +51,15 @@ This's like above command but change problem to solve
 
 _______________________________________________________
 
+** Solved anywhere food problem **
+
+python pacman.py -l testSearch -p AStarFoodSearchAgent
+
+Note: AStarFoodSearchAgent is a shortcut for -p SearchAgent -a fn=astar,prob=FoodSearchProblem,heuristic=foodHeuristic.
+
+__________________________________________________________
+
+
 The Pacman board will show an overlay of the states explored, 
 and the order in which they were explored (brighter red means earlier exploration).
 
