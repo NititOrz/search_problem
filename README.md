@@ -1,9 +1,21 @@
-# search_problem
+Search Problem
 
-Finding Paths
+This is a project from online AI course on www.edx.org
+
+Note:
+
+	It can run on your terminal with following command.
+
+	If Pacman moves too slowly for you, try the option --frameTime 0 after any command.
+
+	For searching algorithm testing:
+	The Pacman board will show an overlay of the states explored, 
+	and the order in which they were explored (brighter red means earlier exploration).
+
+	You can find code of search algorithm in search.py
+	and conner problem solver "searchAgent" in searchAgents.py 
+
 _______________________________
-
-It can run on your terminal with command in following.
 
 ** DFS Finding Paths **
 
@@ -20,8 +32,6 @@ _____________________________________________________
 python pacman.py -l mediumMaze -p SearchAgent -a fn=bfs ----- This command use mediumMaze as the map for searching
 
 python pacman.py -l bigMaze -p SearchAgent -a fn=bfs -z .5 ----- This use bigMaze
-
-If Pacman moves too slowly for you, try the option --frameTime 0 after any command.
 
 _____________________________________________________
 
@@ -41,7 +51,7 @@ python pacman.py -l bigMaze -z .5 -p SearchAgent -a fn=astar,heuristic=manhattan
 
 ________________________________________________________
 
-** Solved food on four corner problem **
+** food on four corner problem **
 
 python pacman.py -l tinyCorners -p SearchAgent -a fn=bfs,prob=CornersProblem
 
@@ -51,7 +61,7 @@ This's like above command but change problem to solve
 
 _______________________________________________________
 
-** Solved anywhere food problem **
+** anywhere food problem **
 
 python pacman.py -l testSearch -p AStarFoodSearchAgent
 
@@ -60,15 +70,14 @@ Note: AStarFoodSearchAgent is a shortcut for -p SearchAgent -a fn=astar,prob=Foo
 
 python pacman.py -l trickySearch -p AStarFoodSearchAgent ----- This is for trickyMap
 
-Note: This search may take time to find about 40 seconds(my computer) because it explores to many node
+Note: This search may take time to find about 40 seconds(my computer) because it explores too many node
 
 
 __________________________________________________________
 
+** Suboptimal search or Replanning **
 
-The Pacman board will show an overlay of the states explored, 
-and the order in which they were explored (brighter red means earlier exploration).
+python pacman.py -l bigSearch -p ClosestDotSearchAgent -z .5 
 
+__________________________________________________________
 
-You can find code of search algorithm in search.py
-and conner problem solver "searchAgent" in searchAgents.py 
